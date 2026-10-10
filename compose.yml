@@ -1,0 +1,25 @@
+services:
+  friday-ssh:
+    build: .
+    container_name: friday-ssh
+    restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
+    ports:
+      - "2222:2222"            # host:container — change the left side to move the public port
+    volumes:
+      - ./data:/data           # signups.db, host key, details.txt
+    environment:
+      TZ_NAME: Asia/Singapore
+      EVENT_NAME: Friday at the house
+      CAPACITY: "4"
+      WAITLIST: "10"
+      CUTOFF_HOUR: "18"
+    # Hardening: nothing in the container needs to write outside /data
+    # or hold any Linux capabilities (port 2222 is unprivileged).
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

@@ -1,0 +1,17 @@
+# Runtime data: host private key, signups.db (names + phone numbers), details.txt
+data/
+
+# Per-machine compose settings (UID/GID)
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# SQLite side files if the DB ever ends up outside data/
+*.db
+*.db-journal
+*.db-wal
+
+
+.vscode
